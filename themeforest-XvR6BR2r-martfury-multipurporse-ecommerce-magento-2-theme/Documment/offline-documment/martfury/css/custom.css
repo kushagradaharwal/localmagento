@@ -1,0 +1,13 @@
+.md-sidebar--primary {
+    background: rgba(63, 81, 181, 0.1);
+}
+.md-nav__title--site {
+    display: none;
+}
+.md-nav__link {
+    text-transform: capitalize;
+}
+.md-typeset .admonition,.md-typeset details{font-size:0.7rem}
+.md-footer-copyright {
+    margin-top: 12px;
+}
