@@ -1,0 +1,16 @@
+<?php
+/**
+ * @var $block MageBig\SyntaxCms\Block\Adminhtml\Show
+ */
+?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "MageBig_SyntaxCms/js/editor": {
+                "elementList": "<?= $block->escapeJs($block->getElementsData()) ?>",
+                "editorOption": <?= $block->getJsonOption();?>
+            }
+        }
+    }
+</script>

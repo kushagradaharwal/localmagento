@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright © magebig.com - All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="block block-dashboard-orders">
+<?php $_orders = $block->getOrders(); ?>
+    <div class="block-title order">
+        <strong><?= $block->escapeHtml(__('Recent Orders')) ?></strong>
+        <?php if (sizeof($_orders->getItems()) > 0): ?>
+            <a class="action view" href="<?= $block->getUrl('sales/order/history') ?>">
+                <span><?= $block->escapeHtml(__('View All')) ?></span>
+            </a>
+        <?php endif; ?>
+    </div>
+    <div class="block-content">
+    <?= $block->getChildHtml() ?>
+    <?php if (sizeof($_orders->getItems()) > 0): ?>
+        <div class="table-wrapper orders-recent">
+            <table class="data table table-order-items recent" id="my-orders-table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="table-col order-id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                        <th scope="col" class="table-col date"><?= $block->escapeHtml(__('Date')) ?></th>
+                        <th scope="col" class="table-col shipping"><?= $block->escapeHtml(__('Ship To')) ?></th>
+                        <th scope="col" class="table-col total"><?= $block->escapeHtml(__('Order Total')) ?></th>
+                        <th scope="col" class="table-col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_orders as $_order): ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="table-col order-id">
+                                <a href="<?= $block->getViewUrl($_order) ?>" class="action view mb-tooltip"
+                                   title="<?= $block->escapeHtml(__('View Order')) ?> #<?= $_order->getRealOrderId() ?>">
+                                    <span>#<?= $_order->getRealOrderId() ?></span>
+                                </a>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="table-col date"><?= $block->formatDate($_order->getCreatedAt()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Ship To')) ?>" class="table-col shipping"><?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="table-col total"><?= $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="table-col status">
+                                <a href="<?= $block->getViewUrl($_order) ?>" class="action-status mb-tooltip"
+                                   title="<?= $block->escapeHtml(__('View Order')) ?> #<?= $_order->getRealOrderId() ?>">
+                                    <span class="order-status <?= $_order->getState() ?>"><?= $_order->getStatusLabel() ?></span>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="message info empty"><span><?= $block->escapeHtml(__('You have placed no orders.')) ?></span></div>
+    <?php endif; ?>
+    </div>
+</div>
